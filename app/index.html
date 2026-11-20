@@ -3,23 +3,94 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>Leonida Legend — GTA VI Trophy Guide &amp; Tracker</title>
+<meta name="description" content="Offline guide and checklist for all 55 Grand Theft Auto VI PlayStation 5 trophies: roadmap to the platinum, missable flags, cited guides, progress tracker.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; 55 trophies</p>
+    <h1>Leonida Legend</h1>
+    <p class="sub">The offline trophy guide &amp; tracker. Every official name, description and grade, a guide in our own words with its sources named, a roadmap to the platinum, and a checklist that remembers your progress.</p>
+    <nav class="masthead-nav" aria-label="Sections"><a href="#roadmapPanel">Roadmap</a><a href="#trophyList">Checklist</a><a href="#detailPanel">Guide</a><a href="#sourcesTitle">Sources</a></nav>
+    <div class="progress-wrap" aria-label="Trophy progress">
+      <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+      <p class="progress-text"><strong id="progressCount">0 of 55 earned</strong> &middot; <span id="progressPct">0%</span> &middot; <span id="gradeCounts"></span></p>
+    </div>
+  </div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
+
+<main>
+  <section class="panel roadmap" id="roadmapPanel" aria-labelledby="roadmapTitle">
+    <div class="panel-head">
+      <h2 id="roadmapTitle">Roadmap to the platinum</h2>
+      <button id="roadmapToggle" type="button" aria-expanded="true">Hide roadmap</button>
+    </div>
+    <p class="lede">One playthrough is enough — about 200 hours to the platinum, per PowerPyx. There is no mission replay and no New Game+, so keep a manual save at the start of each chapter. Cheats switch trophies off, so leave them off for the whole run. Sources: PowerPyx trophy guide &amp; roadmap; Push Square trophy guide.</p>
+    <ol id="roadmapSteps" class="roadmap-steps"></ol>
+    <p class="missable-callout"><strong>Only one trophy is possibly missable:</strong> Positive Mental Attitude — meditate with Lucia on the balcony of Jason&rsquo;s house in Chapter 1, after the mission Down to Earth. Every other trophy can still be earned in free roam after the story. Source: PowerPyx; also flagged by GTABase via CryptoGames.</p>
+  </section>
+
+  <section class="panel controls" aria-label="Tracker controls">
+    <div class="control-row">
+      <label class="search-label">Search <input id="searchBox" type="search" placeholder="Trophy, mission, place&hellip;" autocomplete="off"></label>
+      <label class="grade-label">Grade
+        <select id="gradeFilter">
+          <option value="all">All grades</option>
+          <option value="platinum">Platinum</option>
+          <option value="gold">Gold</option>
+          <option value="silver">Silver</option>
+          <option value="bronze">Bronze</option>
+        </select>
+      </label>
+      <label class="check-label"><input id="earnedOnly" type="checkbox"> Earned only</label>
+      <label class="check-label spoiler-label"><input id="spoilerToggle" type="checkbox" checked> Hide story spoilers</label>
+    </div>
+    <div class="kind-row" id="kindRow" role="group" aria-label="Filter by kind">
+      <button type="button" data-kind="all" class="kind-btn active">All <span class="count" data-count="all"></span></button>
+      <button type="button" data-kind="story" class="kind-btn">Story <span class="count" data-count="story"></span></button>
+      <button type="button" data-kind="missable" class="kind-btn">Missable <span class="count" data-count="missable"></span></button>
+      <button type="button" data-kind="collectibles" class="kind-btn">Collectibles <span class="count" data-count="collectibles"></span></button>
+      <button type="button" data-kind="activities" class="kind-btn">Activities <span class="count" data-count="activities"></span></button>
+      <button type="button" data-kind="online" class="kind-btn">Online <span class="count" data-count="online"></span></button>
+    </div>
+    <p class="online-note">No online trophies: all 55 are single-player and offline. Sources: PowerPyx; GTA Six Insider.</p>
+    <div class="control-row actions-row">
+      <button id="exportBtn" type="button">Export progress (.json)</button>
+      <label class="import-btn">Import progress <input id="importFile" type="file" accept="application/json,.json"></label>
+      <button id="resetBtn" type="button">Reset progress</button>
+      <span id="statusMsg" class="status" role="status"></span>
+    </div>
+  </section>
+
+  <div class="layout">
+    <section class="panel list-panel" aria-label="Trophy checklist">
+      <h2 id="listTitle">Checklist <span id="shownCount"></span></h2>
+      <ul id="trophyList" class="trophy-list"></ul>
+      <p id="emptyMsg" class="empty" hidden>No trophies match these filters.</p>
+    </section>
+
+    <aside class="panel detail-panel" id="detailPanel" aria-label="Selected trophy guide">
+      <h2>Guide</h2>
+      <div id="detailBody"><p class="detail-empty">Pick a trophy from the checklist to see its guide, steps and sources here.</p></div>
+    </aside>
+  </div>
+
+  <section class="panel sources-panel" aria-labelledby="sourcesTitle">
+    <h2 id="sourcesTitle">How this guide was built &amp; its sources</h2>
+    <p>Official names, descriptions and grades are shown exactly as PlayStation publishes them, cross-checked on Exophase and PSNProfiles, which agree on all 55. Every guide below them is written in our own words for this entry; the facts it rests on are cited beside each trophy. Where launch-era guides disagree or a method is still unconfirmed, the guide says so instead of guessing — see Bad Luck, I Guess and Ten Pin. No Rockstar logo, artwork or game screenshot is used anywhere in this guide; the look is our own.</p>
+    <ul class="source-list">
+      <li><a href="https://www.exophase.com/game/grand-theft-auto-vi-psn/trophies/">Exophase — Grand Theft Auto VI Trophies (PS5)</a> — official names, descriptions, grades.</li>
+      <li><a href="https://www.powerpyx.com/gta-6-grand-theft-auto-vi-trophy-guide-roadmap/">PowerPyx — GTA 6 Trophy Guide &amp; Roadmap</a> — roadmap, missable warning, methods for most trophies, 100% checklist figures.</li>
+      <li><a href="https://www.pushsquare.com/guides/gta-6-trophy-guide-and-roadmap">Push Square — GTA 6 Trophy Guide &amp; Roadmap</a> — collectible counts (18 card sets, WAiNK breakdown).</li>
+      <li><a href="https://outputlag.com/guides/gta-6-trophy-list/">OutputLag — GTA 6 Trophy List</a> — missable meditation in Chapter 1, no mission replay, ~200-hour estimate.</li>
+      <li><a href="https://www.planetgta6.com/en/gta-6-trophies/">Planet GTA 6 — GTA 6 Trophies</a> — hidden-trophy split (27 visible, 28 hidden), no online trophies.</li>
+      <li><a href="https://gtasixlnsider.com/gta-6-trophies/">GTA Six Insider — GTA 6 Trophy List</a> — platinum time, story-trophy count.</li>
+    </ul>
+    <p class="fineprint">Fan-made, unofficial guide. Grand Theft Auto and GTA are trademarks of Take-Two Interactive; this guide is not affiliated with or endorsed by Rockstar Games. Works fully offline: it loads no file outside this folder and makes no network request.</p>
+  </section>
+</main>
 <script type="module" src="app.js"></script>
 </body>
 </html>
